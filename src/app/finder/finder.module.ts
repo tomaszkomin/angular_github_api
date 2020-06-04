@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FinderComponent } from './finder.component';
 import { SearchComponent } from './search/search.component';
 import { CollectorComponent } from './collector/collector.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CollectorComponent } from './collector/collector.component';
     CollectorComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   exports: [
     FinderComponent
