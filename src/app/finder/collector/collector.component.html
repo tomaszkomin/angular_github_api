@@ -2,3 +2,15 @@
 <div class="erorr">
   {{errorMsg}}
 </div>
+<section class="reposContainer">
+  <div *ngFor="let repo of collectedRepo" class="repoContainer">
+    <div class="repo">
+      <h3>Repo: {{repo.name}}</h3>
+      {{repo.branches}}
+      <div *ngFor="let branch of repo.branches" class="branches">
+          Branch: {{branch.name}}
+          Last Commit: {{branch.commit.sha}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FinderComponent } from './finder.component';
 import { SearchComponent } from './search/search.component';
 import { CollectorComponent } from './collector/collector.component';
-import { HttpClientModule } from '@angular/common/http';
 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,18 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   exports: [
     FinderComponent
+  ],
+  providers:[
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+    ,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ]
 })
 export class FinderModule { }
