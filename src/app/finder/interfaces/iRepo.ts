@@ -1,3 +1,5 @@
 export interface iRepo {
-    name:string , fork: boolean
+  name: string ,
+  login: string,
+  branches: any
 }

@@ -1,51 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { GithubService } from '../services/api/github/github.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-const NAME = 'tomaszkomin';
-//const NAME = 'paulirish';
-//const NAME = 'torvalds';
+import {  Subject } from 'rxjs';
+import { SearchService } from '../services/search/search.service';
+import { iRepo } from './../interfaces/iRepo';
+import { iGitRepo } from './../interfaces/iGitRepo';
+
+const REPO_LIMIT = 50;
 @Component({
   selector: 'app-collector',
   templateUrl: './collector.component.html',
   styleUrls: ['./collector.component.scss']
 })
 export class CollectorComponent implements OnInit {
-  private _username = NAME;
-  private _username$ =  new BehaviorSubject<string>(this._username);
+  private _username: string;
+  private _username$ =  new Subject<string>();
+  public repoLimit = REPO_LIMIT;
   public errorMsg:string;
-  public collectedRepo: { name:string, branches: any[] }[] = [];
+  public collectedRepo: iRepo[] = [];
 
-  constructor( private githubService:GithubService) {}
+  public isLoading:boolean =false;
+  constructor(
+    private githubService: GithubService,
+    private searchService: SearchService
+  ){}
   ngOnInit() {
-    this.collectRepo();
+
+    this.searchService.getUsername$().subscribe((username: string) => {
+      if(username === '') return
+      this.setUsername(username);
+      this.collectRepo(username);
+    })
   }
-  public collectRepo(){
-    this.githubService.getReposNotForked(this._username)
+  public collectRepo(username: string){
+    this.githubService.getReposNotForked(username,1,this.repoLimit)
       .subscribe(//@to do mergeMap?
-        (reposData:string[]) => {
-          reposData.map((repoData: string) => {
+        (reposData:iGitRepo[]) => {
+          reposData.map((repoData:iGitRepo) => {
             this.collectBranches(repoData);
           })
         },
         (error) => {
           console.log(error);
-          alert(error.message);
         }
       );
   }
-  public collectBranches( repoData: string ){
-    this.githubService.getBranches(this._username ,repoData)
+  public collectBranches(repoData: iGitRepo){
+    this.githubService.getBranches(this._username , repoData)
       .subscribe(
         (branch) => {
-          this.collectedRepo.push({name: repoData, branches: branch});
-          this.collectedRepo.map((repo) => {
-            console.log(repo);
-          })
+          this.collectedRepo.push({name: repoData.name, login: repoData.login, branches: branch});
         },
         (error) => {
           console.log(error);
         }
       )
+  }
+  public setUsername( username: string ){
+    this._username = username;
   }
 }

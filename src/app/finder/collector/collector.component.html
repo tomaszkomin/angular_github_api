@@ -1,16 +1,20 @@
-<p>collector works!</p>
 <div class="erorr">
   {{errorMsg}}
 </div>
-<section class="reposContainer">
-  <div *ngFor="let repo of collectedRepo" class="repoContainer">
+<div *ngIf="!isLoading" class="reposContainer">
+  <div *ngIf="collectedRepo.length > 0 " class="pagination">
+    Showing first {{collectedRepo.length}} results
+  </div>
+  <section *ngFor="let repo of collectedRepo" class="repoContainer">
     <div class="repo">
-      <h3>Repo: {{repo.name}}</h3>
-      {{repo.branches}}
+      <h1>Repo: {{repo.name}}</h1>
       <div *ngFor="let branch of repo.branches" class="branches">
-          Branch: {{branch.name}}
-          Last Commit: {{branch.commit.sha}}
+        <div class="branchContainer">
+          <h3 class="branch">Branch: {{branch.name}} </h3>
+          <span class="commit">Last Commit: {{branch.commit.sha}} </span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
+<div *ngIf="isLoading" class="spinner">Loading... </div>
