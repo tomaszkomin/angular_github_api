@@ -3,13 +3,18 @@ $button-color: #0c5cb8;
 $button-text-color: #f4f5fa;
 $error-color: #ff0000;
 $padding-default: 0.5rem;
+$margin-default: 0.5rem;
 $max-width: 1080px;
+@mixin box-shadow {
+  box-shadow: 0px 0px 10px lighten($main-color, 30);
+}
+
 .searchContainer{
   display: flex;
   border:1px solid $main-color;
-  box-shadow: 0px 0px 5px darken($main-color,10);
+  @include box-shadow;
   border-radius: 5px;
-  padding: 1rem;
+  padding: $padding-default*2;
   max-width: $max-width;
 
   form{
@@ -24,34 +29,36 @@ $max-width: 1080px;
         display: none;
       }
     }
-  }
-  input.username{
-    width: 90%;
-    height: 5rem;
-    border: 2px solid lighten($color: $main-color, $amount: 30);
-    border-radius: 2px;
-    font-size: 3rem;
-  }
-  input.ng-invalid.ng-touched{
-    border: 2px solid $error-color;
-  }
-  button.button{
-    color: $button-text-color;
-    background: $button-color;
-    border: lighten($color: $button-color, $amount: 20);
-    border-radius: 0.3rem;
-    font-size: 1.2rem;
-    padding: $padding-default;
-    margin:0.5rem;
-    display: flex;
-    width: 90%;
-    justify-content: center;
-    align-content: center;
-  }
-  div.error{
-    color:$error-color;
-    box-shadow: 0px 0px 5px lighten($error-color,10);
-    margin: 1rem;
-    padding: $padding-default;
+    input.username{
+      color: darken($button-color,90);
+      padding: $padding-default;
+      border: 2px solid lighten($color: $main-color, $amount: 30);
+      border-radius: 2px;
+      font-size: 3rem;
+      &.ng-invalid.ng-touched{
+        border: 2px solid darken($color: $error-color, $amount: 10);
+      }
+    }
+    button.button{
+      color: $button-text-color;
+      background: $button-color;
+      border: darken($color: $button-color, $amount: 50);
+      border-radius: 0.3rem;
+      font-size: 1.2rem;
+      padding: $padding-default;
+      margin: $margin-default 0rem;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
+    div.error{
+      color:$error-color;
+      margin: $margin-default 0rem;
+      padding: $padding-default;
+      background: lighten($color: $error-color, $amount: 50);
+      border: 1px solid darken($color: $error-color, $amount: 10);
+      border-radius: 0.3rem;
+      box-shadow: 0px 0px 10px $main-color;
+    }
   }
 }

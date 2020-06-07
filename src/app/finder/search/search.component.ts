@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ViewContainerRef, Input, SimpleChanges } from '@angular/core';
+import { Subscription, of, Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { SearchService } from './../services/search/search.service';
+import { debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,8 @@ import { SearchService } from './../services/search/search.service';
 export class SearchComponent implements OnInit {
   public isLoading = false;
   public username$:Subscription;
+  @ViewChild("username", { static: false}) usernameRef: ElementRef;
+  public searchChanged = new Subject<any>();
 
   constructor( private serchService:SearchService ) { }
 
@@ -18,8 +21,25 @@ export class SearchComponent implements OnInit {
     this.username$ = this.serchService.getUsername$()
       .subscribe( username => {
         this.isLoading = false;
-        console.log(username);
       });
+
+    this.debouncedSearchEvent().subscribe((result)=>{
+      console.log(result);
+    });
+  }
+  ngAfterViewInit(){
+  }
+  public handleSearchEvent($event:KeyboardEvent){
+    this.searchChanged.next($event.target);
+  }
+  public debouncedSearchEvent(){
+    const sub = this.searchChanged.pipe(
+      debounceTime(1000),
+      mergeMap((search:any) => {
+        return search;
+      })
+    )
+    return sub;
   }
   public onSignUp(sendObj: NgForm){
 		if(sendObj.form.invalid) return;

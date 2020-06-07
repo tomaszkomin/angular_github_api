@@ -3,11 +3,13 @@
 </div>
 <div *ngIf="!isLoading" class="reposContainer">
   <div *ngIf="collectedRepo.length > 0 " class="pagination">
-    Showing first {{collectedRepo.length}} results
+    Showing {{collectedRepo.length}} forked repo
+    <button *ngIf="this.nextPage" (click)="nextCollectRepo()">Show More</button>
   </div>
   <section *ngFor="let repo of collectedRepo" class="repoContainer">
     <div class="repo">
       <h1>Repo: {{repo.name}}</h1>
+      <h2 class="owner">Owner Login: {{repo.login}} </h2>
       <div *ngFor="let branch of repo.branches" class="branches">
         <div class="branchContainer">
           <h3 class="branch">Branch: {{branch.name}} </h3>

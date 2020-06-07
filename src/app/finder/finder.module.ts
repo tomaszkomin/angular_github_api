@@ -9,12 +9,14 @@ import { CollectorComponent } from './collector/collector.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaginatorComponent } from './collector/paginator/paginator.component';
 
 @NgModule({
   declarations: [
     FinderComponent,
     SearchComponent,
     CollectorComponent,
+    PaginatorComponent,
   ],
   imports: [
     CommonModule,
