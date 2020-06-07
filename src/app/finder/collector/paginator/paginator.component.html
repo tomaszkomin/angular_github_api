@@ -1,3 +1,5 @@
-<div class="pagination">
-  Showing {{collectedRepo.length}} forked repo from {{repoLimit}}
+<div *ngIf="collectorComponent.collectedRepo.length > 0 " class="pagination">
+  <h4>Found {{collectorComponent.collectedRepo.length}} forked repo</h4>
+  <h4>Page {{collectorComponent.repoPage}} / {{collectorComponent.lastPage}}</h4>
+  <button *ngIf="collectorComponent.nextPage" (click)="collectorComponent.nextCollectRepo()">Find More</button>
 </div>

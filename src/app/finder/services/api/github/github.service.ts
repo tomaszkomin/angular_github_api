@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from './../../../../../environments/environment'
 
 import { iGitRepo } from './../../../interfaces/iGitRepo';
+import * as parser from 'parse-link-header';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { iGitRepo } from './../../../interfaces/iGitRepo';
 export class GithubService {
   private _connectionString:string = environment.GITHUB_CONNECTION_STRING;
   private _reposLimit = ++environment.GITHUB_REPOS_LIMIT;
-  private _parseLinkHeader = require('parse-link-header');
+  private _parseLinkHeader = parser;
   constructor( private http: HttpClient ) { }
 
   public getReposNotForked( name: string , page:Number = 1, limit:number = this._reposLimit ) :Observable<iGitRepo[]> {

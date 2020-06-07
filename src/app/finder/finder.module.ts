@@ -10,6 +10,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginatorComponent } from './collector/paginator/paginator.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorService } from './services/error.service';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { PaginatorComponent } from './collector/paginator/paginator.component';
     SearchComponent,
     CollectorComponent,
     PaginatorComponent,
+    ErrorComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { PaginatorComponent } from './collector/paginator/paginator.component';
     FinderComponent
   ],
   providers:[
+    ErrorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -39,5 +43,6 @@ import { PaginatorComponent } from './collector/paginator/paginator.component';
       multi: true
     }
   ]
+  ,entryComponents: [ErrorComponent]
 })
 export class FinderModule { }

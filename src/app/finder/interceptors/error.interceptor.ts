@@ -1,10 +1,11 @@
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-
+import { ErrorService } from './../../finder/services/error.service';
 export class ErrorInterceptor implements HttpInterceptor{
-	constructor( ){}
+
+//constructor( public errorService:ErrorService){}
+  constructor(){}
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any>{
 		return next.handle(req).pipe(
 			catchError((errorRes : HttpErrorResponse) => {

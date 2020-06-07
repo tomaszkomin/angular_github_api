@@ -2,10 +2,7 @@
   {{errorMsg}}
 </div>
 <div *ngIf="!isLoading" class="reposContainer">
-  <div *ngIf="collectedRepo.length > 0 " class="pagination">
-    Showing {{collectedRepo.length}} forked repo
-    <button *ngIf="this.nextPage" (click)="nextCollectRepo()">Show More</button>
-  </div>
+  <app-paginator></app-paginator>
   <section *ngFor="let repo of collectedRepo" class="repoContainer">
     <div class="repo">
       <h1>Repo: {{repo.name}}</h1>

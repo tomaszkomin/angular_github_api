@@ -13,12 +13,12 @@ import { environment} from './../../../environments/environment';
 })
 export class CollectorComponent implements OnInit {
   private _username: string;
-  private _username$ =  new Subject<string>();
   public repoLimit = environment.GITHUB_REPOS_LIMIT;
   public repoPage = environment.REPO_INITIAL_PAGE;
   public errorMsg:string;
   public collectedRepo: iRepo[] = [];
   public nextPage:boolean = false;
+  public lastPage:number = 1;
   public isLoading:boolean = false;
   constructor(
     private githubService: GithubService,
@@ -37,19 +37,26 @@ export class CollectorComponent implements OnInit {
     })
   };
   public collectRepo(username: string){
-    this.githubService.getReposMetaData(username, this.repoPage ,this.repoLimit)
-      .subscribe((meta)=>{
-        this.nextPage = !!meta //!! map to boolean
-      });
-     this.githubService.getReposNotForked(username, this.repoPage ,this.repoLimit)
-       .subscribe(//@to do mergeMap?
+     this.isLoading = true;
+     this.getMetaData(username);
+     this.getReposNotForked(username);
+  }
+  public getReposNotForked( username:string){
+    this.githubService.getReposNotForked(username, this.repoPage ,this.repoLimit)
+       .subscribe(
          (reposData: iGitRepo[]) => {
            reposData.map((repoData: iGitRepo) => {
              this.collectBranches(repoData);
            })
          },
-         (error) => { console.log(error);}
-    );
+         (error) => {
+           this.isLoading = false;
+           console.log(error);
+          },
+          () => {
+            this.isLoading = false;
+          }
+      );
   }
   public collectBranches(repoData: iGitRepo){
     this.githubService.getBranches(this._username , repoData)
@@ -73,5 +80,22 @@ export class CollectorComponent implements OnInit {
   }
   public setUsername(username: string){
     this._username = username;
+  }
+  public getMetaData(username: string){
+    this.githubService.getReposMetaData(username, this.repoPage ,this.repoLimit)
+      .subscribe((meta)=>{
+        if(!meta.last) {
+          console.log("88 !meta")
+          this.nextPage = false;
+        }
+        else{
+          console.log("92 true")
+          console.log(this.lastPage);
+          console.log(this.repoPage )
+          console.log(this.repoPage < this.lastPage)
+          this.lastPage = +meta.last.page;
+          this.nextPage = this.repoPage < this.lastPage;
+        }
+      });
   }
 }

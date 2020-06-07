@@ -9,9 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class FinderComponent implements OnInit {
 
   constructor() { }
-
   ngOnInit() {
 
   }
-
 }
