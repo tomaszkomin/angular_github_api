@@ -10,11 +10,12 @@ import { debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+
   public isLoading = false;
   public username$:Subscription;
-  @ViewChild("username", { static: false}) usernameRef: ElementRef;
   public searchChanged = new Subject<any>();
 
+  @ViewChild( NgForm , {static:false}) ngForm: NgForm;
   constructor( private serchService:SearchService ) { }
 
   ngOnInit() {

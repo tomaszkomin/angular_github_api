@@ -1,24 +1,26 @@
 <div *ngIf="!isLoading" class="searchContainer">
-	  <form  #signUpForm="ngForm" (submit)="onSignUp(signUpForm)" >
-         <!--(keyup)="handleSearchEvent($event)"-->
-        <input  #username="ngModel"
-                ngModel
-                class="username"
-                type="username"
-                name="username"
-                Input="ngModel"
-                placeholder="type GitHub Username"
-                required
-        >
+  <form  #signUpForm="ngForm" (submit)="onSignUp(signUpForm)" >
+        <!--(keyup)="handleSearchEvent($event)"-->
+      <input  #username="ngModel"
+              ngModel
+              class="username"
+              type="username"
+              name="username"
+              Input="ngModel"
+              placeholder="type GitHub Username"
+              required
+      >
+      <div class="errorContainer">
         <div class="error" *ngIf="username.invalid">Enter a valid username</div>
-      <button
-        class="button-submit button"
-        mat-flat-button
-        color="primary"
-        type="submit">
-        Search In GitHub
-      </button>
-    </form>
-  </div>
-  <div class="spinner" *ngIf="isLoading"></div>
+      </div>
+    <button
+      class="button-submit button"
+      mat-flat-button
+      color="primary"
+      type="submit">
+      Search In GitHub
+    </button>
+  </form>
+</div>
+<div class="spinner" *ngIf="isLoading"></div>
 

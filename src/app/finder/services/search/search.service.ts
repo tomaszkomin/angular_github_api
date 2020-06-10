@@ -12,7 +12,6 @@ export class SearchService implements OnDestroy{
   constructor() {}
   setUsername( username: string ) {
     if( username === '') return;
-
     this.username$.next(username);
   }
   getUsername$() : BehaviorSubject<string> {

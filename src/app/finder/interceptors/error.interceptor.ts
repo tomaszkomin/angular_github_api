@@ -1,7 +1,7 @@
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ErrorService } from './../../finder/services/error.service';
+import { ErrorService } from '../services/erorr/error.service';
 export class ErrorInterceptor implements HttpInterceptor{
 
 //constructor( public errorService:ErrorService){}

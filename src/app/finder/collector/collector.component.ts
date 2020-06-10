@@ -5,6 +5,7 @@ import { SearchService } from '../services/search/search.service';
 import { iRepo } from './../interfaces/iRepo';
 import { iGitRepo } from './../interfaces/iGitRepo';
 import { environment} from './../../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-collector',
@@ -23,6 +24,7 @@ export class CollectorComponent implements OnInit {
   constructor(
     private githubService: GithubService,
     private searchService: SearchService,
+    private spinner: NgxSpinnerService
   ){}
   ngOnInit() {
     this._handleUsernameSub();
@@ -38,6 +40,7 @@ export class CollectorComponent implements OnInit {
   };
   public collectRepo(username: string){
      this.isLoading = true;
+     this.spinner.show();
      this.getMetaData(username);
      this.getReposNotForked(username);
   }
@@ -50,11 +53,13 @@ export class CollectorComponent implements OnInit {
            })
          },
          (error) => {
-           this.isLoading = false;
-           console.log(error);
+            this.isLoading = false;
+            this.spinner.hide()
+            console.log(error);
           },
           () => {
             this.isLoading = false;
+            this.spinner.hide();
           }
       );
   }
@@ -85,14 +90,9 @@ export class CollectorComponent implements OnInit {
     this.githubService.getReposMetaData(username, this.repoPage ,this.repoLimit)
       .subscribe((meta)=>{
         if(!meta.last) {
-          console.log("88 !meta")
           this.nextPage = false;
         }
         else{
-          console.log("92 true")
-          console.log(this.lastPage);
-          console.log(this.repoPage )
-          console.log(this.repoPage < this.lastPage)
           this.lastPage = +meta.last.page;
           this.nextPage = this.repoPage < this.lastPage;
         }

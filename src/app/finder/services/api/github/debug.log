@@ -1,0 +1,6 @@
+[0608/224215.323:ERROR:process_info.cc(329)] VirtualQueryEx: Odmowa dostêpu. (0x5)
+[0608/224215.325:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0608/224215.325:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0608/224215.325:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Podjêto próbê uzyskania dostêpu do procesu koñcz¹cego dzia³anie. (0xc000010a)
+[0609/014653.119:ERROR:process_reader_win.cc(123)] NtOpenThread: {Odmowa dostêpu} Proces za¿¹da³ dostêpu do obiektu, ale prawa dostêpu nie zosta³y przyznane. (0xc0000022)
+[0609/014653.122:ERROR:exception_snapshot_win.cc(98)] thread ID 12704 not found in process

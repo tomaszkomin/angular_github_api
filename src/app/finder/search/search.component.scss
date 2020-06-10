@@ -14,11 +14,11 @@
     align-content: center;
     flex-direction: column;
     align-content: center;
-    &.ng-untouched{
-      .error{
-        display: none;
-      }
-    }
+    // &.ng-untouched{
+    //   .error{
+    //     display: none;
+    //   }
+    // }
     input.username{
       color: darken($button-color,90);
       padding: $padding-default;

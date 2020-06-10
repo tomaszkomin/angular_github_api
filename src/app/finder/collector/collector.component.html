@@ -3,17 +3,22 @@
 </div>
 <div *ngIf="!isLoading" class="reposContainer">
   <app-paginator></app-paginator>
-  <section *ngFor="let repo of collectedRepo" class="repoContainer">
-    <div class="repo">
-      <h1>Repo: {{repo.name}}</h1>
-      <h2 class="owner">Owner Login: {{repo.login}} </h2>
-      <div *ngFor="let branch of repo.branches" class="branches">
-        <div class="branchContainer">
-          <h3 class="branch">Branch: {{branch.name}} </h3>
-          <span class="commit">Last Commit: {{branch.commit.sha}} </span>
+  <div *ngIf="collectedRepo.length > 0; else emptyRepo">
+    <section *ngFor="let repo of collectedRepo" class="repoContainer">
+      <div class="repo">
+        <h1>Repo: {{repo.name}}</h1>
+        <h2 class="owner">Owner Login: {{repo.login}} </h2>
+        <div *ngFor="let branch of repo.branches" class="branches">
+          <div class="branchContainer">
+            <h3 class="branch">Branch: {{branch.name}} </h3>
+            <span class="commit">Last Commit: {{branch.commit.sha}} </span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
+  <ng-template #emptyRepo>
+    <div class="emptyRepo">No forked respositories found ...</div>
+  </ng-template>
 </div>
 <div *ngIf="isLoading" class="spinner">Loading... </div>
